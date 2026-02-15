@@ -15,6 +15,7 @@ function initializeWebsite() {
     setupScrollEffects();
     setupBeehivIntegration();
     setupNewsletterFallback();
+    setupCalendlyIntegration();
 }
 
 // Navigation Setup
@@ -631,5 +632,107 @@ function showNewsletterFallback() {
                 'event_label': 'Beehiiv Fallback'
             });
         }
+    }
+}
+
+// Calendly Integration Setup
+function setupCalendlyIntegration() {
+    // Configuration - UPDATE THIS URL WITH YOUR ACTUAL CALENDLY LINK
+    const CALENDLY_URL = 'https://calendly.com/lc-lcorning/30min'; // REPLACE WITH YOUR ACTUAL CALENDLY URL
+    
+    // Get all booking buttons
+    const bookingButtons = [
+        document.getElementById('nav-book-btn'),
+        document.getElementById('hero-book-btn'),
+        document.getElementById('book-directly-btn')
+    ];
+    
+    // Add click handlers to all booking buttons
+    bookingButtons.forEach(button => {
+        if (button) {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                openCalendlyPopup();
+            });
+        }
+    });
+    
+    // Function to open Calendly popup
+    function openCalendlyPopup() {
+        if (typeof Calendly !== 'undefined') {
+            Calendly.initPopupWidget({
+                url: CALENDLY_URL,
+                parentElement: document.body,
+                prefill: {},
+                utm: {
+                    utmSource: 'website',
+                    utmMedium: 'popup',
+                    utmCampaign: 'ai_consultation'
+                }
+            });
+            
+            // Track Calendly popup open
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'calendly_popup_open', {
+                    'event_category': 'Booking',
+                    'event_label': 'Consultation Request'
+                });
+            }
+        } else {
+            console.error('Calendly not loaded, opening in new tab');
+            // Fallback: open Calendly in new tab
+            window.open(CALENDLY_URL, '_blank');
+        }
+    }
+    
+    // Listen for Calendly events
+    window.addEventListener('message', function(e) {
+        if (e.origin !== 'https://calendly.com') return;
+        
+        if (e.data.event && e.data.event.indexOf('calendly') === 0) {
+            console.log('Calendly event:', e.data.event);
+            
+            // Track Calendly events
+            if (typeof gtag !== 'undefined') {
+                gtag('event', e.data.event, {
+                    'event_category': 'Calendly',
+                    'event_label': 'Booking Widget'
+                });
+            }
+            
+            // Handle specific events
+            if (e.data.event === 'calendly.event_scheduled') {
+                // Meeting was scheduled - show confirmation
+                showBookingConfirmation();
+            }
+        }
+    });
+    
+    // Show booking confirmation
+    function showBookingConfirmation() {
+        // Create confirmation popup
+        const confirmationDiv = document.createElement('div');
+        confirmationDiv.className = 'fixed top-4 right-4 bg-green-600 text-white px-6 py-4 rounded-lg shadow-lg z-50 max-w-sm';
+        confirmationDiv.innerHTML = `
+            <div class="flex items-start">
+                <i class="fas fa-check-circle text-2xl mr-3 mt-1"></i>
+                <div>
+                    <h4 class="font-bold">Meeting Scheduled!</h4>
+                    <p class="text-sm">You'll receive a confirmation email shortly. Looking forward to speaking with you!</p>
+                </div>
+                <button class="ml-3 text-white opacity-75 hover:opacity-100" onclick="this.parentElement.parentElement.remove()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        `;
+        
+        document.body.appendChild(confirmationDiv);
+        
+        // Auto-remove after 8 seconds
+        setTimeout(() => {
+            if (confirmationDiv.parentNode) {
+                confirmationDiv.remove();
+            }
+        }, 8000);
     }
 }
