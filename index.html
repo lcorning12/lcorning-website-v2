@@ -394,7 +394,13 @@
                 <p class="text-xl text-blue-100">Book a free consultation. Get your custom savings analysis and roadmap.</p>
             </div>
             <div class="max-w-2xl mx-auto bg-white rounded-lg p-8 text-gray-900">
-                <form id="contact-form">
+                <form id="contact-form" action="https://formspree.io/f/xdkonqen" method="POST">
+                    <!-- Hidden fields for proper routing -->
+                    <input type="hidden" name="_to" value="lc@lcorning.com">
+                    <input type="hidden" name="_subject" value="New AI Consultation Request">
+                    <input type="hidden" name="_template" value="table">
+                    <input type="hidden" name="_next" value="https://leecorning.com/thank-you">
+                    
                     <div class="grid md:grid-cols-2 gap-6 mb-6">
                         <div>
                             <label class="block text-sm font-bold mb-2">Full Name *</label>

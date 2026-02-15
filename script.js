@@ -162,27 +162,120 @@ function setupContactForm() {
         submitButton.innerHTML = '<div class="spinner"></div> Sending...';
         submitButton.disabled = true;
         
-        // Simulate form submission (replace with actual endpoint)
-        setTimeout(() => {
+        // Submit to Formspree and create calendar invite
+        submitFormData(formData, form, submitButton, originalText);
+    });
+}
+
+// Submit form data to Formspree and create calendar event
+async function submitFormData(formData, form, submitButton, originalText) {
+    try {
+        // Submit to Formspree
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        
+        if (response.ok) {
             // Show success message
-            showMessage('Thank you! We\'ll be in touch within 4 hours.', 'success');
+            showMessage('Thank you! We\'ll be in touch within 4 hours to schedule your consultation.', 'success');
+            
+            // Create calendar booking link
+            const name = formData.get('name');
+            const email = formData.get('email');
+            const company = formData.get('company');
+            const goals = formData.get('goals') || 'AI transformation consultation';
+            
+            // Generate calendar invite URL (Google Calendar)
+            const calendarUrl = createCalendarInvite(name, email, company, goals);
+            
+            // Show calendar booking option
+            setTimeout(() => {
+                showCalendarBookingModal(calendarUrl, name);
+            }, 1000);
             
             // Reset form
             form.reset();
             
-            // Reset button
-            submitButton.textContent = originalText;
-            submitButton.disabled = false;
-            
-            // Track conversion (if analytics is set up)
+            // Track conversion
             if (typeof gtag !== 'undefined') {
                 gtag('event', 'form_submit', {
                     'event_category': 'Contact',
                     'event_label': 'Consultation Request'
                 });
             }
-        }, 2000);
-    });
+        } else {
+            throw new Error('Form submission failed');
+        }
+    } catch (error) {
+        console.error('Form submission error:', error);
+        showMessage('Sorry, there was an error sending your message. Please try again or email lc@lcorning.com directly.', 'error');
+    } finally {
+        // Reset button
+        submitButton.textContent = originalText;
+        submitButton.disabled = false;
+    }
+}
+
+// Create Google Calendar invite URL
+function createCalendarInvite(name, email, company, goals) {
+    const title = encodeURIComponent(`AI Consultation - ${name} (${company})`);
+    const details = encodeURIComponent(`
+AI Transformation Consultation
+
+Client: ${name}
+Company: ${company}
+Email: ${email}
+
+Goals: ${goals}
+
+Meeting Link: https://meet.google.com/new
+    `);
+    
+    // Set for next business day at 2 PM EST
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(14, 0, 0, 0); // 2 PM
+    
+    const startTime = tomorrow.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    const endTime = new Date(tomorrow.getTime() + 60 * 60 * 1000).toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z';
+    
+    return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startTime}/${endTime}&details=${details}&guests=${encodeURIComponent('lc@lcorning.com,' + email)}`;
+}
+
+// Show calendar booking modal
+function showCalendarBookingModal(calendarUrl, name) {
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+    modal.innerHTML = `
+        <div class="bg-white rounded-lg p-8 max-w-md mx-4">
+            <h3 class="text-2xl font-bold mb-4 text-gray-900">Almost Done, ${name}!</h3>
+            <p class="text-gray-600 mb-6">Click below to schedule your free consultation on my calendar:</p>
+            <div class="flex gap-4">
+                <a href="${calendarUrl}" target="_blank" class="flex-1 bg-blue-600 text-white px-6 py-3 rounded-lg text-center hover:bg-blue-700">
+                    📅 Schedule Meeting
+                </a>
+                <button onclick="this.closest('.fixed').remove()" class="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50">
+                    Later
+                </button>
+            </div>
+            <p class="text-sm text-gray-500 mt-4 text-center">
+                Or email me directly at <a href="mailto:lc@lcorning.com" class="text-blue-600">lc@lcorning.com</a>
+            </p>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+    
+    // Auto-remove after 30 seconds
+    setTimeout(() => {
+        if (modal.parentNode) {
+            modal.remove();
+        }
+    }, 30000);
 }
 
 // Form validation
