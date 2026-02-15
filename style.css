@@ -1,3 +1,40 @@
+/* Lee Corning AI - Military-Tech + Gradient Futurism Aesthetic */
+
+:root {
+    /* Primary Colors - Military-Tech Foundation */
+    --deep-space: #0A0E1A;
+    --pure-white: #FFFFFF;
+    --signal-orange: #FF4500;
+    --signal-orange-light: #FF6B35;
+    
+    /* Gradient System - Futuristic Accents */
+    --electric-blue: #0066FF;
+    --cyan-flow: #00D4AA;
+    --neon-green: #00FF88;
+    
+    /* Supporting Colors */
+    --charcoal: #1A1A1A;
+    --steel-gray: #6B7280;
+    --light-gray: #F3F4F6;
+    --warning-red: #FF0000;
+    
+    /* Gradient Definitions */
+    --gradient-primary: linear-gradient(135deg, var(--electric-blue) 0%, var(--cyan-flow) 50%, var(--neon-green) 100%);
+    --gradient-dark: linear-gradient(135deg, var(--deep-space) 0%, var(--charcoal) 100%);
+    --gradient-accent: linear-gradient(90deg, var(--signal-orange) 0%, var(--signal-orange-light) 100%);
+    --gradient-sphere: radial-gradient(circle at 30% 30%, var(--electric-blue) 0%, var(--cyan-flow) 40%, var(--neon-green) 100%);
+    
+    /* Typography Scale */
+    --font-mono: 'Courier New', 'SF Mono', Monaco, Inconsolata, 'Roboto Mono', monospace;
+    --font-sans: 'Inter', 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    
+    /* Shadows & Effects */
+    --shadow-glow: 0 0 30px rgba(0, 212, 170, 0.3);
+    --shadow-orange: 0 4px 20px rgba(255, 69, 0, 0.25);
+    --shadow-dark: 0 10px 40px rgba(10, 14, 26, 0.4);
+    --shadow-neon: 0 0 50px rgba(0, 255, 136, 0.4);
+}
+
 /* Custom styles for Lee Corning AI website */
 
 /* Smooth scrolling */

@@ -16,66 +16,108 @@
 </head>
 <body class="bg-white">
     <!-- Navigation -->
-    <nav class="fixed top-0 w-full bg-white/95 backdrop-blur-sm z-50 border-b border-gray-100">
+    <nav class="fixed top-0 w-full backdrop-blur-sm z-50 border-b" style="background: rgba(10, 14, 26, 0.95); border-color: rgba(255, 69, 0, 0.3);">
         <div class="container mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
-                <div class="text-2xl font-bold text-blue-600">Lee Corning</div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#services" class="text-gray-700 hover:text-blue-600">Services</a>
-                    <a href="#roi-calculator" class="text-gray-700 hover:text-blue-600">ROI Calculator</a>
-                    <a href="blog.html" class="text-gray-700 hover:text-blue-600">Blog</a>
-                    <a href="#about" class="text-gray-700 hover:text-blue-600">About</a>
-                    <a href="#case-studies" class="text-gray-700 hover:text-blue-600">Case Studies</a>
+                <div class="text-2xl font-bold font-mono tracking-wider text-white">
+                    <span style="color: var(--signal-orange);">LEE</span> CORNING
                 </div>
-                <button id="nav-book-btn" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700">📅 Book Now</button>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#services" class="text-white hover:text-orange-500 font-mono text-sm tracking-wide transition-colors">SERVICES</a>
+                    <a href="#roi-calculator" class="text-white hover:text-orange-500 font-mono text-sm tracking-wide transition-colors">ROI CALC</a>
+                    <a href="blog.html" class="text-white hover:text-orange-500 font-mono text-sm tracking-wide transition-colors">INTEL</a>
+                    <a href="#about" class="text-white hover:text-orange-500 font-mono text-sm tracking-wide transition-colors">PROFILE</a>
+                    <a href="#case-studies" class="text-white hover:text-orange-500 font-mono text-sm tracking-wide transition-colors">FIELD-TESTED</a>
+                </div>
+                <button id="nav-book-btn" class="px-6 py-2 rounded font-mono text-sm font-bold tracking-wide transition-all" style="background: var(--gradient-accent); color: white; box-shadow: var(--shadow-orange);">
+                    [BOOK NOW]
+                </button>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="pt-24 pb-20 bg-gradient-to-r from-blue-50 to-indigo-100">
-        <div class="container mx-auto px-6">
+    <section class="pt-24 pb-20 relative overflow-hidden" style="background: var(--gradient-dark);">
+        <!-- Background Tech Grid -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0" style="background-image: 
+                linear-gradient(rgba(255,69,0,0.5) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,69,0,0.5) 1px, transparent 1px);
+                background-size: 40px 40px;"></div>
+        </div>
+        
+        <!-- Gradient Orb -->
+        <div class="absolute top-20 right-20 w-96 h-96 opacity-30" style="background: var(--gradient-sphere); border-radius: 50%; filter: blur(40px);"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
             <div class="flex flex-col lg:flex-row items-center">
                 <div class="lg:w-1/2 mb-10 lg:mb-0">
-                    <div class="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold mb-4">
-                        🚀 ROI in 90 Days Guaranteed
+                    <!-- Status Badge -->
+                    <div class="inline-block px-4 py-2 mb-6 font-mono text-sm tracking-wide border" 
+                         style="background: rgba(255, 69, 0, 0.1); border-color: var(--signal-orange); color: var(--signal-orange);">
+                        [FIELD TESTED] ROI GUARANTEED 90 DAYS
                     </div>
-                    <h1 class="text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-                        Become <span class="text-blue-600">AI-Native</span>
+                    
+                    <!-- Main Headline -->
+                    <h1 class="text-5xl lg:text-7xl font-bold text-white mb-6 font-mono tracking-tight leading-tight">
+                        AUTONOMOUS
+                        <br><span style="background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">DEFENSE</span>
+                        <br><span class="text-2xl lg:text-3xl font-normal opacity-80">FOR BUSINESS</span>
                     </h1>
-                    <p class="text-xl text-gray-600 mb-8">
-                        Transform your business into an AI-first powerhouse. Cut costs by 60%. Multiply output by 10x. Lead your industry.
+                    
+                    <!-- Mission Statement -->
+                    <p class="text-xl text-gray-300 mb-8 font-mono leading-relaxed">
+                        DEPLOY AI-NATIVE SYSTEMS // CUT OPERATIONAL COSTS 60% // MULTIPLY OUTPUT 10X // LEAD MARKET SEGMENT
                     </p>
-                    <div class="flex flex-col sm:flex-row gap-4">
-                        <button id="hero-book-btn" class="bg-green-600 text-white px-8 py-4 rounded-lg hover:bg-green-700 text-lg font-semibold">
-                            📅 Book Free Consultation
+                    
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 mb-12">
+                        <button id="hero-book-btn" class="px-8 py-4 font-mono font-bold tracking-wide text-lg transition-all rounded" 
+                                style="background: var(--gradient-accent); color: white; box-shadow: var(--shadow-orange);">
+                            [INITIATE CONSULTATION]
                         </button>
-                        <a href="#roi-calculator" class="bg-blue-600 text-white px-8 py-4 rounded-lg hover:bg-blue-700 text-lg font-semibold">
-                            💰 Calculate Savings First
+                        <a href="#roi-calculator" class="px-8 py-4 font-mono font-bold tracking-wide text-lg transition-all rounded border text-white hover:bg-white hover:text-gray-900" 
+                           style="border-color: var(--cyan-flow);">
+                            [CALCULATE IMPACT]
                         </a>
                     </div>
-                    <div class="mt-8 flex items-center space-x-6">
-                        <div class="text-sm text-gray-500">
-                            <strong>$485K</strong> average annual savings
+                    
+                    <!-- Mission Metrics -->
+                    <div class="grid grid-cols-3 gap-6 font-mono text-sm">
+                        <div class="text-center p-4 rounded" style="background: rgba(255, 69, 0, 0.1); border: 1px solid rgba(255, 69, 0, 0.3);">
+                            <div class="text-2xl font-bold" style="color: var(--signal-orange);">$485K</div>
+                            <div class="text-gray-400 uppercase tracking-wide">AVG SAVINGS</div>
                         </div>
-                        <div class="text-sm text-gray-500">
-                            <strong>90 days</strong> to full deployment
+                        <div class="text-center p-4 rounded" style="background: rgba(0, 212, 170, 0.1); border: 1px solid rgba(0, 212, 170, 0.3);">
+                            <div class="text-2xl font-bold" style="color: var(--cyan-flow);">90</div>
+                            <div class="text-gray-400 uppercase tracking-wide">DAYS DEPLOY</div>
                         </div>
-                        <div class="text-sm text-gray-500">
-                            <strong>10x</strong> productivity increase
+                        <div class="text-center p-4 rounded" style="background: rgba(0, 255, 136, 0.1); border: 1px solid rgba(0, 255, 136, 0.3);">
+                            <div class="text-2xl font-bold" style="color: var(--neon-green);">10X</div>
+                            <div class="text-gray-400 uppercase tracking-wide">OUTPUT MULT</div>
                         </div>
                     </div>
                 </div>
+                
+                <!-- Right Side: Tech Visualization -->
                 <div class="lg:w-1/2 lg:pl-12">
-                    <!-- Demo Video Placeholder -->
-                    <div class="bg-gray-900 rounded-lg shadow-2xl relative">
-                        <div class="aspect-video bg-gradient-to-br from-blue-600 to-indigo-700 rounded-lg flex items-center justify-center">
-                            <div class="text-center text-white">
-                                <i class="fas fa-play-circle text-6xl mb-4 cursor-pointer hover:scale-110 transition-transform"></i>
-                                <p class="text-lg font-semibold">Watch AI Transformation in Action</p>
-                                <p class="text-sm opacity-80">3 minute demo</p>
+                    <div class="relative">
+                        <!-- Main Sphere -->
+                        <div class="w-96 h-96 mx-auto relative">
+                            <div class="absolute inset-0 rounded-full" style="background: var(--gradient-sphere); box-shadow: var(--shadow-glow);"></div>
+                            <div class="absolute inset-8 rounded-full bg-black bg-opacity-40 backdrop-blur flex items-center justify-center">
+                                <div class="text-center text-white">
+                                    <div class="text-6xl mb-4 font-mono" style="color: var(--neon-green);">AI</div>
+                                    <div class="font-mono text-lg tracking-wide opacity-80">CORE SYSTEM</div>
+                                    <div class="font-mono text-sm opacity-60">STATUS: ACTIVE</div>
+                                </div>
                             </div>
                         </div>
+                        
+                        <!-- Orbital Elements -->
+                        <div class="absolute top-16 left-8 w-4 h-4 rounded-full animate-pulse" style="background: var(--signal-orange);"></div>
+                        <div class="absolute bottom-16 right-8 w-3 h-3 rounded-full animate-pulse" style="background: var(--cyan-flow);"></div>
+                        <div class="absolute top-1/2 left-0 w-2 h-2 rounded-full animate-pulse" style="background: var(--neon-green);"></div>
                     </div>
                 </div>
             </div>
@@ -83,47 +125,84 @@
     </section>
 
     <!-- About Lee Section -->
-    <section id="about" class="py-20 bg-white">
+    <section id="about" class="py-20" style="background: var(--light-gray);">
         <div class="container mx-auto px-6">
             <div class="flex flex-col lg:flex-row items-center">
                 <div class="lg:w-1/3 mb-10 lg:mb-0">
                     <!-- Lee's Photo Placeholder -->
-                    <div class="w-80 h-80 bg-gray-200 rounded-lg mx-auto flex items-center justify-center">
-                        <div class="text-center text-gray-500">
-                            <i class="fas fa-user-tie text-6xl mb-4"></i>
-                            <p>Lee Corning Photo</p>
+                    <div class="w-80 h-80 rounded mx-auto flex items-center justify-center relative" 
+                         style="background: var(--gradient-dark); border: 2px solid var(--signal-orange);">
+                        <div class="text-center" style="color: var(--signal-orange);">
+                            <i class="fas fa-user-shield text-6xl mb-4"></i>
+                            <p class="font-mono tracking-wide">CLASSIFIED</p>
+                            <p class="font-mono text-sm opacity-60">FIELD OPERATOR</p>
                         </div>
+                        <!-- Corner Elements -->
+                        <div class="absolute top-2 left-2 w-4 h-4" style="border-top: 2px solid var(--signal-orange); border-left: 2px solid var(--signal-orange);"></div>
+                        <div class="absolute top-2 right-2 w-4 h-4" style="border-top: 2px solid var(--signal-orange); border-right: 2px solid var(--signal-orange);"></div>
+                        <div class="absolute bottom-2 left-2 w-4 h-4" style="border-bottom: 2px solid var(--signal-orange); border-left: 2px solid var(--signal-orange);"></div>
+                        <div class="absolute bottom-2 right-2 w-4 h-4" style="border-bottom: 2px solid var(--signal-orange); border-right: 2px solid var(--signal-orange);"></div>
                     </div>
                 </div>
                 <div class="lg:w-2/3 lg:pl-12">
-                    <h2 class="text-4xl font-bold text-gray-900 mb-6">Meet Lee Corning</h2>
-                    <p class="text-xl text-gray-600 mb-6">
-                        Former Tesla AI team member with 15+ years in SaaS and enterprise transformation. 
-                        I've helped 50+ companies transition to AI-first operations.
-                    </p>
-                    <div class="grid md:grid-cols-2 gap-6 mb-8">
-                        <div class="flex items-center">
-                            <i class="fas fa-graduation-cap text-blue-600 text-xl mr-3"></i>
-                            <span>Liberty University (BBA Finance/Econ)</span>
+                    <!-- Header -->
+                    <div class="mb-6">
+                        <div class="font-mono text-sm tracking-wide mb-2" style="color: var(--signal-orange);">
+                            [PERSONNEL FILE: CLASSIFIED]
                         </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-basketball-ball text-blue-600 text-xl mr-3"></i>
-                            <span>NCAA D1 Basketball Alumni</span>
-                        </div>
-                        <div class="flex items-center">
-                            <i class="fas fa-building text-blue-600 text-xl mr-3"></i>
-                            <span>Head of Channel Partners @ Tessell</span>
-                        </div>
-                        <div class="fas fa-chart-line text-blue-600 text-xl mr-3"></i>
-                            <span>8,000+ LinkedIn Followers</span>
+                        <h2 class="text-4xl font-bold font-mono tracking-tight" style="color: var(--deep-space);">
+                            CORNING, LEE
+                        </h2>
+                        <div class="font-mono text-lg opacity-80" style="color: var(--steel-gray);">
+                            AI TRANSFORMATION SPECIALIST // FIELD TESTED
                         </div>
                     </div>
+                    
+                    <!-- Mission Brief -->
+                    <p class="text-lg mb-8 font-mono leading-relaxed" style="color: var(--charcoal);">
+                        FORMER TESLA AI DIVISION // 15+ YEARS ENTERPRISE SYSTEMS // 50+ SUCCESSFUL DEPLOYMENTS
+                        <br>SPECIALIZATION: AI-NATIVE BUSINESS ARCHITECTURE // OPERATIONAL COST REDUCTION // MARKET DOMINANCE STRATEGY
+                    </p>
+                    
+                    <!-- Credentials Grid -->
+                    <div class="grid md:grid-cols-2 gap-4 mb-8">
+                        <div class="flex items-center p-3 rounded" style="background: rgba(0, 102, 255, 0.1); border-left: 4px solid var(--electric-blue);">
+                            <div class="font-mono text-sm">
+                                <div class="font-bold" style="color: var(--electric-blue);">LIBERTY UNIVERSITY</div>
+                                <div class="opacity-80">BBA Finance/Economics</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-3 rounded" style="background: rgba(0, 212, 170, 0.1); border-left: 4px solid var(--cyan-flow);">
+                            <div class="font-mono text-sm">
+                                <div class="font-bold" style="color: var(--cyan-flow);">NCAA DIVISION I</div>
+                                <div class="opacity-80">Basketball Alumni</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-3 rounded" style="background: rgba(0, 255, 136, 0.1); border-left: 4px solid var(--neon-green);">
+                            <div class="font-mono text-sm">
+                                <div class="font-bold" style="color: var(--neon-green);">TESSELL EXECUTIVE</div>
+                                <div class="opacity-80">Head of Channel Partners</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center p-3 rounded" style="background: rgba(255, 69, 0, 0.1); border-left: 4px solid var(--signal-orange);">
+                            <div class="font-mono text-sm">
+                                <div class="font-bold" style="color: var(--signal-orange);">8K+ NETWORK</div>
+                                <div class="opacity-80">LinkedIn Industry Influence</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Social Links -->
                     <div class="flex space-x-4">
-                        <a href="https://linkedin.com/in/leecorning" class="text-blue-600 hover:text-blue-700">
-                            <i class="fab fa-linkedin text-2xl"></i>
+                        <a href="https://linkedin.com/in/leecorning" target="_blank" class="flex items-center px-4 py-2 rounded font-mono text-sm transition-all" 
+                           style="background: rgba(0, 102, 255, 0.1); color: var(--electric-blue); border: 1px solid var(--electric-blue);">
+                            <i class="fab fa-linkedin mr-2"></i>
+                            [VERIFY LINKEDIN]
                         </a>
-                        <a href="https://x.com/LeeCorning" class="text-blue-600 hover:text-blue-700">
-                            <i class="fab fa-twitter text-2xl"></i>
+                        <a href="https://x.com/LeeCorning" target="_blank" class="flex items-center px-4 py-2 rounded font-mono text-sm transition-all" 
+                           style="background: rgba(0, 212, 170, 0.1); color: var(--cyan-flow); border: 1px solid var(--cyan-flow);">
+                            <i class="fab fa-twitter mr-2"></i>
+                            [VIEW INTEL]
                         </a>
                     </div>
                 </div>
@@ -393,13 +472,40 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-blue-600 text-white">
-        <div class="container mx-auto px-6">
+    <section id="contact" class="py-20 relative overflow-hidden" style="background: var(--gradient-dark);">
+        <!-- Background Tech Grid -->
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute inset-0" style="background-image: 
+                linear-gradient(rgba(255,69,0,0.8) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,69,0,0.8) 1px, transparent 1px);
+                background-size: 60px 60px;"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-10">
             <div class="text-center mb-12">
-                <h2 class="text-4xl font-bold mb-4">Ready to Transform Your Business?</h2>
-                <p class="text-xl text-blue-100">Book a free consultation. Get your custom savings analysis and roadmap.</p>
+                <div class="font-mono text-sm tracking-wide mb-4" style="color: var(--signal-orange);">
+                    [MISSION BRIEFING]
+                </div>
+                <h2 class="text-4xl font-bold mb-4 text-white font-mono tracking-tight">
+                    INITIATE AI DEPLOYMENT
+                </h2>
+                <p class="text-xl font-mono leading-relaxed" style="color: var(--steel-gray);">
+                    REQUEST CLASSIFIED CONSULTATION // RECEIVE TACTICAL ROADMAP // COMMENCE TRANSFORMATION
+                </p>
             </div>
-            <div class="max-w-2xl mx-auto bg-white rounded-lg p-8 text-gray-900">
+            <div class="max-w-2xl mx-auto rounded p-8 relative" style="background: var(--charcoal); border: 2px solid var(--signal-orange);">
+                <!-- Corner Brackets -->
+                <div class="absolute top-2 left-2 w-6 h-6" style="border-top: 3px solid var(--signal-orange); border-left: 3px solid var(--signal-orange);"></div>
+                <div class="absolute top-2 right-2 w-6 h-6" style="border-top: 3px solid var(--signal-orange); border-right: 3px solid var(--signal-orange);"></div>
+                <div class="absolute bottom-2 left-2 w-6 h-6" style="border-bottom: 3px solid var(--signal-orange); border-left: 3px solid var(--signal-orange);"></div>
+                <div class="absolute bottom-2 right-2 w-6 h-6" style="border-bottom: 3px solid var(--signal-orange); border-right: 3px solid var(--signal-orange);"></div>
+                
+                <div class="text-center mb-6">
+                    <div class="font-mono text-sm tracking-wide mb-2" style="color: var(--signal-orange);">
+                        [SECURE COMMUNICATION CHANNEL]
+                    </div>
+                </div>
+                
                 <form id="contact-form" action="https://formspree.io/f/xdkonqen" method="POST">
                     <!-- Hidden fields for proper routing -->
                     <input type="hidden" name="_to" value="lc@lcorning.com">
@@ -409,45 +515,61 @@
                     
                     <div class="grid md:grid-cols-2 gap-6 mb-6">
                         <div>
-                            <label class="block text-sm font-bold mb-2">Full Name *</label>
-                            <input type="text" name="name" required class="w-full p-3 border rounded-lg" placeholder="John Smith">
+                            <label class="block font-mono text-sm font-bold mb-2 tracking-wide text-white">OPERATIVE NAME *</label>
+                            <input type="text" name="name" required 
+                                   class="w-full p-3 font-mono text-white rounded transition-all focus:outline-none"
+                                   style="background: var(--deep-space); border: 1px solid var(--steel-gray);"
+                                   placeholder="JOHN.SMITH">
                         </div>
                         <div>
-                            <label class="block text-sm font-bold mb-2">Work Email *</label>
-                            <input type="email" name="email" required class="w-full p-3 border rounded-lg" placeholder="john@company.com">
+                            <label class="block font-mono text-sm font-bold mb-2 tracking-wide text-white">COMM CHANNEL *</label>
+                            <input type="email" name="email" required 
+                                   class="w-full p-3 font-mono text-white rounded transition-all focus:outline-none"
+                                   style="background: var(--deep-space); border: 1px solid var(--steel-gray);"
+                                   placeholder="john@company.com">
                         </div>
                     </div>
                     <div class="grid md:grid-cols-2 gap-6 mb-6">
                         <div>
-                            <label class="block text-sm font-bold mb-2">Company Name *</label>
-                            <input type="text" name="company" required class="w-full p-3 border rounded-lg" placeholder="Acme Inc">
+                            <label class="block font-mono text-sm font-bold mb-2 tracking-wide text-white">ORGANIZATION *</label>
+                            <input type="text" name="company" required 
+                                   class="w-full p-3 font-mono text-white rounded transition-all focus:outline-none"
+                                   style="background: var(--deep-space); border: 1px solid var(--steel-gray);"
+                                   placeholder="ACME_INDUSTRIES">
                         </div>
                         <div>
-                            <label class="block text-sm font-bold mb-2">Company Size</label>
-                            <select name="size" class="w-full p-3 border rounded-lg">
-                                <option>Select size</option>
-                                <option>1-10 employees</option>
-                                <option>11-50 employees</option>
-                                <option>51-200 employees</option>
-                                <option>201-500 employees</option>
-                                <option>500+ employees</option>
+                            <label class="block font-mono text-sm font-bold mb-2 tracking-wide text-white">FORCE SIZE</label>
+                            <select name="size" 
+                                    class="w-full p-3 font-mono text-white rounded transition-all focus:outline-none"
+                                    style="background: var(--deep-space); border: 1px solid var(--steel-gray);">
+                                <option style="background: var(--deep-space);">SELECT UNIT SIZE</option>
+                                <option style="background: var(--deep-space);">SQUAD (1-10)</option>
+                                <option style="background: var(--deep-space);">PLATOON (11-50)</option>
+                                <option style="background: var(--deep-space);">COMPANY (51-200)</option>
+                                <option style="background: var(--deep-space);">BATTALION (201-500)</option>
+                                <option style="background: var(--deep-space);">REGIMENT (500+)</option>
                             </select>
                         </div>
                     </div>
                     <div class="mb-6">
-                        <label class="block text-sm font-bold mb-2">Tell us about your goals</label>
-                        <textarea name="goals" rows="4" class="w-full p-3 border rounded-lg" placeholder="We're looking to automate our customer support and reduce operational costs..."></textarea>
+                        <label class="block font-mono text-sm font-bold mb-2 tracking-wide text-white">MISSION PARAMETERS</label>
+                        <textarea name="goals" rows="4" 
+                                  class="w-full p-3 font-mono text-white rounded transition-all focus:outline-none"
+                                  style="background: var(--deep-space); border: 1px solid var(--steel-gray);"
+                                  placeholder="OBJECTIVE: Automate customer support systems // REDUCE operational costs by 60% // DEPLOY AI-native workflows // ELIMINATE manual processes..."></textarea>
                     </div>
                     <div class="flex flex-col gap-4">
-                        <button type="submit" class="w-full bg-blue-600 text-white py-4 rounded-lg text-lg font-semibold hover:bg-blue-700">
-                            📧 Send Details First
+                        <button type="submit" class="w-full py-4 rounded font-mono text-lg font-bold tracking-wide transition-all hover:transform hover:scale-[1.02]" 
+                                style="background: var(--gradient-primary); color: white; box-shadow: var(--shadow-glow);">
+                            [TRANSMIT INTELLIGENCE]
                         </button>
-                        <button type="button" id="book-directly-btn" class="w-full bg-green-600 text-white py-4 rounded-lg text-lg font-semibold hover:bg-green-700">
-                            📅 Book Meeting Directly
+                        <button type="button" id="book-directly-btn" class="w-full py-4 rounded font-mono text-lg font-bold tracking-wide transition-all hover:transform hover:scale-[1.02]" 
+                                style="background: var(--gradient-accent); color: white; box-shadow: var(--shadow-orange);">
+                            [SCHEDULE BRIEFING]
                         </button>
                     </div>
-                    <p class="text-sm text-gray-500 text-center mt-4">
-                        Book instantly with Calendly or send details first. Your choice!
+                    <p class="text-sm text-center mt-4 font-mono" style="color: var(--steel-gray);">
+                        DEPLOY INSTANT SCHEDULING OR SUBMIT TACTICAL BRIEF // MULTIPLE VECTORS AVAILABLE
                     </p>
                 </form>
             </div>
@@ -455,12 +577,25 @@
             <!-- Alternative: Direct Calendar Booking -->
             <div class="max-w-4xl mx-auto mt-12">
                 <div class="text-center mb-8">
-                    <h3 class="text-2xl font-bold text-white mb-4">Or Book Directly on My Calendar</h3>
-                    <p class="text-blue-100">Choose a time that works for you - no forms needed!</p>
+                    <div class="font-mono text-sm tracking-wide mb-2" style="color: var(--signal-orange);">
+                        [ALTERNATIVE DEPLOYMENT METHOD]
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4 font-mono tracking-tight">
+                        DIRECT SCHEDULING INTERFACE
+                    </h3>
+                    <p class="font-mono" style="color: var(--steel-gray);">
+                        SELECT OPTIMAL TIME SLOT // NO FORMS REQUIRED // IMMEDIATE CONFIRMATION
+                    </p>
                 </div>
                 
                 <!-- Calendly inline widget begin -->
-                <div class="bg-white rounded-lg overflow-hidden" style="min-width:320px;height:700px;">
+                <div class="rounded overflow-hidden relative" style="min-width:320px;height:700px; background: var(--charcoal); border: 2px solid var(--cyan-flow);">
+                    <!-- Corner Brackets -->
+                    <div class="absolute top-2 left-2 w-4 h-4 z-10" style="border-top: 2px solid var(--cyan-flow); border-left: 2px solid var(--cyan-flow);"></div>
+                    <div class="absolute top-2 right-2 w-4 h-4 z-10" style="border-top: 2px solid var(--cyan-flow); border-right: 2px solid var(--cyan-flow);"></div>
+                    <div class="absolute bottom-2 left-2 w-4 h-4 z-10" style="border-bottom: 2px solid var(--cyan-flow); border-left: 2px solid var(--cyan-flow);"></div>
+                    <div class="absolute bottom-2 right-2 w-4 h-4 z-10" style="border-bottom: 2px solid var(--cyan-flow); border-right: 2px solid var(--cyan-flow);"></div>
+                    
                     <div class="calendly-inline-widget" 
                          data-url="https://calendly.com/lc-lcorning/30min" 
                          style="min-width:320px;height:700px;">
