@@ -13,6 +13,8 @@ function initializeWebsite() {
     setupVideoPlaceholder();
     setupFAQAccordion();
     setupScrollEffects();
+    setupBeehivIntegration();
+    setupNewsletterFallback();
 }
 
 // Navigation Setup
@@ -508,3 +510,126 @@ window.addEventListener('load', function() {
         });
     }
 });
+
+// Beehiiv Integration Setup
+function setupBeehivIntegration() {
+    // Wait for Beehiiv embed to load
+    const checkBeehivEmbed = () => {
+        const embedContainer = document.getElementById('beehiiv-newsletter-embed');
+        if (!embedContainer) return;
+        
+        const iframe = embedContainer.querySelector('iframe');
+        if (iframe) {
+            iframe.onload = () => {
+                console.log('Beehiiv embed loaded successfully');
+                // Track successful embed load
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'beehiiv_embed_loaded', {
+                        'event_category': 'Newsletter',
+                        'event_label': 'Beehiiv Embed'
+                    });
+                }
+            };
+            
+            iframe.onerror = () => {
+                console.log('Beehiiv embed failed to load, showing fallback form');
+                showNewsletterFallback();
+            };
+            
+            // Timeout fallback after 10 seconds
+            setTimeout(() => {
+                if (!iframe.contentDocument) {
+                    console.log('Beehiiv embed timeout, showing fallback form');
+                    showNewsletterFallback();
+                }
+            }, 10000);
+        }
+    };
+    
+    // Check immediately and after DOM updates
+    checkBeehivEmbed();
+    setTimeout(checkBeehivEmbed, 2000);
+}
+
+// Newsletter Fallback Setup
+function setupNewsletterFallback() {
+    const fallbackForm = document.getElementById('newsletter-form');
+    if (!fallbackForm) return;
+    
+    fallbackForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(fallbackForm);
+        const email = formData.get('email');
+        
+        // Validate email
+        if (!email || !isValidEmail(email)) {
+            showMessage('Please enter a valid email address.', 'error');
+            return;
+        }
+        
+        // Show loading state
+        const submitButton = fallbackForm.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+        submitButton.innerHTML = '<div class="spinner"></div> Subscribing...';
+        submitButton.disabled = true;
+        
+        try {
+            // Submit to newsletter service (could be Beehiiv API, Mailchimp, etc.)
+            const response = await fetch('https://api.beehiiv.com/v2/publications/YOUR_PUBLICATION_ID/subscriptions', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer YOUR_API_KEY',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    referring_site: window.location.origin,
+                    utm_source: 'website',
+                    utm_medium: 'newsletter_form'
+                })
+            });
+            
+            if (response.ok) {
+                showMessage('Thanks for subscribing! Check your email to confirm.', 'success');
+                fallbackForm.reset();
+                
+                // Track successful subscription
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'newsletter_subscribe', {
+                        'event_category': 'Newsletter',
+                        'event_label': 'Fallback Form'
+                    });
+                }
+            } else {
+                throw new Error('Subscription failed');
+            }
+        } catch (error) {
+            console.error('Newsletter subscription error:', error);
+            showMessage('Sorry, something went wrong. Please try again or email us directly.', 'error');
+        } finally {
+            // Reset button
+            submitButton.textContent = originalText;
+            submitButton.disabled = false;
+        }
+    });
+}
+
+// Show newsletter fallback form
+function showNewsletterFallback() {
+    const embedContainer = document.getElementById('beehiiv-newsletter-embed');
+    const fallbackForm = document.getElementById('newsletter-form');
+    
+    if (embedContainer && fallbackForm) {
+        embedContainer.style.display = 'none';
+        fallbackForm.style.display = 'flex';
+        
+        // Track fallback usage
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'newsletter_fallback_shown', {
+                'event_category': 'Newsletter',
+                'event_label': 'Beehiiv Fallback'
+            });
+        }
+    }
+}
