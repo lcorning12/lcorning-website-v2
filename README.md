@@ -7,7 +7,6 @@
 #### **1. Personal Branding & Credibility**
 - **Lee's photo and bio section** - builds trust with personal connection
 - **Real credentials displayed** - Tesla AI, NCAA D1, LinkedIn followers
-- **Professional contact information** - email, phone, location
 - **Social proof integration** - LinkedIn and X/Twitter links
 
 #### **2. Interactive ROI Calculator**
@@ -18,9 +17,6 @@
 
 #### **3. Enhanced Conversion Optimization**
 - **Multiple CTAs** throughout the page
-- **90-Day ROI Guarantee** - reduces risk, increases conversions
-- **Improved pricing strategy** - $299/$599/Custom (up from $99/$249)
-- **Urgency elements** - "Setup fee waived" messaging
 
 #### **4. Better User Experience**
 - **Smooth scroll navigation**
@@ -30,7 +26,6 @@
 - **FAQ accordion** to address objections
 
 #### **5. Professional Content Structure**
-- **Case studies section** with specific results
 - **Detailed service explanations**
 - **Process walkthrough** (Discover → Document → Design → Deploy)
 - **Industry-specific messaging**
@@ -63,13 +58,7 @@
 - **"AI-Native"** vs generic "AI consulting"
 - **Specific savings numbers** vs vague promises
 - **Industry expertise** demonstration
-- **Risk reversal** (guarantee, pilot programs)
-
-#### **Pricing Strategy**
-- **Premium positioning** - $299/$599 vs $99/$249
-- **Value-based pricing** - tied to ROI, not hours
-- **Enterprise focus** - custom solutions for large companies
-- **Setup fee waiver** - creates urgency
+- **Risk reversal** (pilot programs)
 
 ### **Files Included**
 

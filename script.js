@@ -382,7 +382,7 @@ function setupAnimations() {
     });
 
     // Add animation classes to elements
-    const animatedElements = document.querySelectorAll('.testimonial-card, .pricing-card, .stat-number');
+    const animatedElements = document.querySelectorAll('.stat-number');
     animatedElements.forEach(el => {
         el.classList.add('animate-on-scroll');
     });
