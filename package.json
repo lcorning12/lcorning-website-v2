@@ -1,0 +1,13 @@
+{
+  "name": "lcorning-website",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "preview": "INCLUDE_DRAFTS=1 node scripts/build.mjs",
+    "test": "node scripts/check.mjs"
+  },
+  "dependencies": {
+    "marked": "^15.0.12"
+  }
+}
