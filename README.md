@@ -6,7 +6,7 @@ GitHub Pages for this repo currently deploys from `main` to `https://lcorning12.
 
 ## Add a post
 
-See [content/README.md](content/README.md). Short version: add one Markdown file to `content/posts/`, then run `npm run build`.
+See [content/README.md](content/README.md). Short version: add one Markdown file to `content/posts/` with `title`, `date`, `category`, `tags`, `description`, and an optional `canonical_url`, then run `npm run build`. The body stays Markdown so a later cross-posting tool can write the same files.
 
 `content/posts/example-draft.md` is a layout sample with `draft: true`. The production build does not publish it. `npm run preview` includes drafts so the layout can be reviewed locally. Do not deploy a preview build.
 
@@ -29,13 +29,13 @@ All of this is in `site.config.json`. Empty URLs are omitted from the HTML.
 | --- | --- | --- |
 | `substackUrl` | empty | Substack publication URL. Until then, the subscribe link and embed stay hidden. The writing section says a Substack is coming soon. |
 | `nextlayer.url` | empty | NextLayerUS site URL. None was in the repo. The Next Layer section does not link anywhere yet. |
-| `links` → Facebook | empty | Profile URL |
-| `links` → LinkedIn | empty | Profile URL |
-| `links` → Instagram | empty | Profile URL |
-| `links` → YouTube | empty | Profile URL |
-| `links` → GitHub | empty | Profile URL |
-| `links` → Substack | empty | Profile URL, if it should also appear with the other icons |
-| `links` → X | `https://x.com/LeeCorning` | Already set |
+| `links` → X | `https://x.com/LeeCorning` | Set |
+| `links` → Facebook | `https://www.facebook.com/lcorning` | Set |
+| `links` → LinkedIn | `https://www.linkedin.com/in/leecorning/` | Set |
+| `links` → GitHub | `https://github.com/lcorning12` | Set |
+| `links` → Instagram | empty | Profile URL. Hidden until set. |
+| `links` → YouTube | empty | Profile URL. Hidden until set. |
+| `links` → Substack | empty | Profile URL, if it should also appear with the other icons. Hidden until set. |
 
 Do not guess the empty URLs. Do not add testimonials, prices, guarantees, statistics, or contact details that are not already known.
 

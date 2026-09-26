@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { build, isPublicUrl, markdownToHtml, renderSubstack, renderIconLinks } from './lib.mjs';
+import { build, canonicalUrlFrom, isPublicUrl, markdownToHtml, parseFrontmatter, renderSubstack, renderIconLinks, tagList } from './lib.mjs';
 
 const errors = [];
 const expect = (condition, message) => {
@@ -8,14 +8,18 @@ const expect = (condition, message) => {
 };
 
 const config = JSON.parse(fs.readFileSync('site.config.json', 'utf8'));
-const filled = config.links.filter((link) => String(link.url || '').trim());
-expect(
-  filled.length === 1 && filled[0].id === 'x' && filled[0].url === 'https://x.com/LeeCorning',
-  'Only the X link should have a URL, and it must be https://x.com/LeeCorning'
-);
-for (const id of ['facebook', 'linkedin', 'instagram', 'youtube', 'github', 'substack']) {
+const expectedLinks = {
+  x: 'https://x.com/LeeCorning',
+  facebook: 'https://www.facebook.com/lcorning',
+  linkedin: 'https://www.linkedin.com/in/leecorning/',
+  instagram: '',
+  youtube: '',
+  github: 'https://github.com/lcorning12',
+  substack: '',
+};
+for (const [id, url] of Object.entries(expectedLinks)) {
   const entry = config.links.find((link) => link.id === id);
-  expect(entry && String(entry.url || '').trim() === '', `links.${id} should be present with an empty URL`);
+  expect(entry && entry.url === url, `links.${id} should be ${url || 'empty'}`);
 }
 expect(config.substackUrl.trim() === '', 'substackUrl should be empty');
 expect(config.nextlayer.url.trim() === '', 'nextlayer.url should be empty');
@@ -42,6 +46,30 @@ const icons = renderIconLinks({
 expect(icons.includes('https://x.com/LeeCorning'), 'filled link should render');
 expect(!icons.includes('Facebook') && !icons.includes('LinkedIn'), 'empty links should not render');
 expect(!isPublicUrl('') && !isPublicUrl('TODO') && !isPublicUrl('https://'), 'empty and incomplete URLs are not public');
+
+const parsed = parseFrontmatter(`---
+title: "Hello"
+date: 2026-09-26
+category: writing
+tags:
+  - one
+  - two
+description: "A note."
+canonical_url: "https://example.com/hello"
+---
+Body
+`);
+expect(tagList(parsed.data.tags).join(',') === 'one,two', 'block tags should parse');
+expect(canonicalUrlFrom(parsed.data.canonical_url, 'hello.md') === 'https://example.com/hello', 'canonical_url should be kept');
+expect(canonicalUrlFrom('', 'hello.md') === '', 'empty canonical_url should be omitted');
+expect(tagList('alpha, beta').join(',') === 'alpha,beta', 'comma tags should parse');
+let threw = false;
+try {
+  canonicalUrlFrom('not a url', 'hello.md');
+} catch (error) {
+  threw = /canonical_url/.test(error.message);
+}
+expect(threw, 'a bad canonical_url should fail the build');
 
 const youtube = markdownToHtml('https://www.youtube.com/watch?v=abcdefghijk\n');
 expect(youtube.includes('https://www.youtube-nocookie.com/embed/abcdefghijk'), 'YouTube URLs should become embeds');
@@ -75,6 +103,12 @@ expect(fs.existsSync('dist/links/index.html'), 'links page missing');
 expect(!fs.existsSync('dist/blog/example-draft/index.html'), 'draft post was published');
 expect(!fs.existsSync('dist/content'), 'source posts were copied into dist');
 expect(distHtml.includes('https://x.com/LeeCorning'), 'production pages should link to X');
+expect(distHtml.includes('https://www.facebook.com/lcorning'), 'production pages should link to Facebook');
+expect(distHtml.includes('https://www.linkedin.com/in/leecorning/'), 'production pages should link to LinkedIn');
+expect(distHtml.includes('https://github.com/lcorning12'), 'production pages should link to GitHub');
+for (const label of ['Instagram', 'YouTube', 'Substack']) {
+  expect(!distHtml.includes(`aria-label="${label}"`) && !distHtml.includes(`>${label}<`), `${label} should stay hidden`);
+}
 expect(distHtml.includes('Experimental Art') && distHtml.includes('Next Layer'), 'category sections missing');
 expect(distHtml.includes('No published posts yet.'), 'empty state missing');
 expect(distHtml.includes('A Substack is coming soon.'), 'Substack coming-soon note missing');
@@ -94,10 +128,7 @@ const forbidden = [
   'ROI GUARANTEED',
   '5,000+',
   'beehiiv',
-  'linkedin.com',
-  'facebook.com',
   'instagram.com',
-  'github.com',
   '$485K',
   'Cut costs by 60%',
   'lc@lcorning.com',
@@ -109,6 +140,9 @@ for (const phrase of forbidden) {
 const allowed = [
   'https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css',
   'https://x.com/LeeCorning',
+  'https://www.facebook.com/lcorning',
+  'https://www.linkedin.com/in/leecorning/',
+  'https://github.com/lcorning12',
   'http://www.w3.org/2000/svg',
 ];
 const urls = [...distHtml.matchAll(/https?:\/\/[^"'\\\s<)]+/g)].map((match) => match[0].replace(/&amp;/g, '&'));
@@ -123,6 +157,8 @@ expect(previewPost.includes('video-embed-placeholder'), 'preview post should sho
 expect(previewPost.includes('not facts about Lee Corning'), 'preview post should say it is not about Lee');
 expect(previewPost.includes('content="noindex"'), 'preview build should be noindex');
 expect(!previewPost.includes('Tesla'), 'draft post should not invent a Tesla claim');
+expect(previewPost.includes('<li>example</li>') && previewPost.includes('<li>layout</li>'), 'draft post should show its tags');
+expect(!previewPost.includes('rel="canonical"'), 'draft post has no canonical_url, so no canonical tag');
 
 if (errors.length) {
   console.error(errors.join('\n'));

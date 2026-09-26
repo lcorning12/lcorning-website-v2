@@ -2,7 +2,7 @@
   "_todo": [
     "Set substackUrl to the real Substack publication URL when it exists. An empty value hides the subscribe link and embed.",
     "Set nextlayer.url when the NextLayerUS site URL is known. Nothing in this repo had that URL, so it stays blank.",
-    "Fill links[].url for Facebook, LinkedIn, Instagram, YouTube, GitHub, and Substack. Empty URLs are not rendered. Do not guess profile URLs."
+    "Fill links[].url for Instagram, YouTube, and Substack when those profiles exist. Empty URLs are not rendered."
   ],
   "siteName": "Lee Corning",
   "description": "Experimental art, videos, and writing from Lee Corning.",
@@ -16,11 +16,11 @@
   },
   "links": [
     { "id": "x", "label": "X", "url": "https://x.com/LeeCorning" },
-    { "id": "facebook", "label": "Facebook", "url": "" },
-    { "id": "linkedin", "label": "LinkedIn", "url": "" },
+    { "id": "facebook", "label": "Facebook", "url": "https://www.facebook.com/lcorning" },
+    { "id": "linkedin", "label": "LinkedIn", "url": "https://www.linkedin.com/in/leecorning/" },
     { "id": "instagram", "label": "Instagram", "url": "" },
     { "id": "youtube", "label": "YouTube", "url": "" },
-    { "id": "github", "label": "GitHub", "url": "" },
+    { "id": "github", "label": "GitHub", "url": "https://github.com/lcorning12" },
     { "id": "substack", "label": "Substack", "url": "" }
   ],
   "categories": [

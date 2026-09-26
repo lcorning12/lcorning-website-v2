@@ -51,27 +51,72 @@ export function loadConfig() {
   return config;
 }
 
-function parseFrontmatter(raw) {
-  const match = raw.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
+function unquote(value) {
+  const trimmed = String(value).trim();
+  if (
+    (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+    (trimmed.startsWith("'") && trimmed.endsWith("'"))
+  ) {
+    return trimmed.slice(1, -1);
+  }
+  return trimmed;
+}
+
+function parseScalar(value) {
+  const raw = unquote(value);
+  if (raw === 'true') return true;
+  if (raw === 'false') return false;
+  if (raw === '' || raw === 'null' || raw === '~') return '';
+  if (raw.startsWith('[') && raw.endsWith(']')) {
+    return raw
+      .slice(1, -1)
+      .split(',')
+      .map((item) => unquote(item))
+      .filter(Boolean);
+  }
+  return raw;
+}
+
+export function parseFrontmatter(raw) {
+  const match = String(raw).match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
   if (!match) return { data: {}, body: raw };
   const data = {};
-  for (const line of match[1].split(/\r?\n/)) {
+  const lines = match[1].split(/\r?\n/);
+  for (let i = 0; i < lines.length; i += 1) {
+    const line = lines[i];
     if (!line.trim() || line.trim().startsWith('#')) continue;
     const idx = line.indexOf(':');
     if (idx === -1) continue;
     const key = line.slice(0, idx).trim();
-    let value = line.slice(idx + 1).trim();
-    if (
-      (value.startsWith('"') && value.endsWith('"')) ||
-      (value.startsWith("'") && value.endsWith("'"))
-    ) {
-      value = value.slice(1, -1);
+    const rest = line.slice(idx + 1).trim();
+    if (rest === '') {
+      const items = [];
+      while (i + 1 < lines.length && /^\s*-\s+/.test(lines[i + 1])) {
+        i += 1;
+        items.push(unquote(lines[i].replace(/^\s*-\s+/, '')));
+      }
+      data[key] = items.length ? items : '';
+      continue;
     }
-    if (value === 'true') value = true;
-    else if (value === 'false') value = false;
-    data[key] = value;
+    data[key] = parseScalar(rest);
   }
   return { data, body: match[2] };
+}
+
+export function tagList(value) {
+  if (Array.isArray(value)) return value.map((tag) => String(tag).trim()).filter(Boolean);
+  if (typeof value !== 'string' || !value.trim()) return [];
+  return value.split(',').map((tag) => tag.trim()).filter(Boolean);
+}
+
+export function canonicalUrlFrom(value, filename) {
+  if (value == null) return '';
+  const text = String(value).trim();
+  if (!text) return '';
+  if (!isPublicUrl(text)) {
+    throw new Error(`${filename} canonical_url is not an http(s) URL`);
+  }
+  return text;
 }
 
 function formatDate(iso) {
@@ -116,7 +161,9 @@ export function loadPosts(config) {
       date: String(data.date),
       dateLabel: formatDate(String(data.date)),
       category: String(data.category),
+      tags: tagList(data.tags),
       description: data.description ? String(data.description) : '',
+      canonicalUrl: canonicalUrlFrom(data.canonical_url, file),
       draft,
       minutes: readingMinutes(body),
       body,
@@ -297,7 +344,7 @@ function navHref(fromDir, id) {
   return categoryHref(fromDir, id);
 }
 
-function layout({ config, title, description, fromDir, active, main, includeDrafts }) {
+function layout({ config, title, description, fromDir, active, main, includeDrafts, canonical }) {
   const asset = (file) => relHref(fromDir, file);
   const home = relHref(fromDir, 'index.html');
   const icons = renderIconLinks(config);
@@ -306,6 +353,9 @@ function layout({ config, title, description, fromDir, active, main, includeDraf
     return `<a href="${navHref(fromDir, item.id)}"${current}>${escapeHtml(item.label)}</a>`;
   }).join('');
   const robots = includeDrafts ? '\n    <meta name="robots" content="noindex">' : '';
+  const canonicalTag = isPublicUrl(canonical)
+    ? `\n    <link rel="canonical" href="${escapeHtml(String(canonical).trim())}">`
+    : '';
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -315,7 +365,7 @@ function layout({ config, title, description, fromDir, active, main, includeDraf
     <meta name="description" content="${escapeHtml(description)}">
     <meta property="og:title" content="${escapeHtml(title)}">
     <meta property="og:description" content="${escapeHtml(description)}">
-    <meta property="og:type" content="website">${robots}
+    <meta property="og:type" content="website">${robots}${canonicalTag}
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%230A0E1A'/%3E%3Ctext x='2' y='13' fill='%23FF4500' font-size='12' font-family='monospace'%3EL%3C/text%3E%3C/svg%3E">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link href="${asset('style.css')}" rel="stylesheet">
@@ -329,8 +379,8 @@ function layout({ config, title, description, fromDir, active, main, includeDraf
             <label for="nav-check" class="nav-toggle"><span class="sr-only">Menu</span><span></span><span></span><span></span></label>
             <div class="nav-panel" data-nav-panel>
                 ${links}
-                ${icons ? `<span class="nav-icons">${icons}</span>` : ''}
             </div>
+            ${icons ? `<div class="nav-icons">${icons}</div>` : ''}
         </div>
     </nav>
     <main id="content">
@@ -538,6 +588,7 @@ function postMain(config, post) {
         <p class="kicker kicker-on-dark"><a href="${relHref(`blog/${post.slug}`, 'blog/index.html')}#${escapeHtml(post.category)}">${escapeHtml(category?.label || post.category)}</a></p>
         <h1>${escapeHtml(post.title)}</h1>
         <p class="meta on-dark"><time datetime="${escapeHtml(post.date)}">${escapeHtml(post.dateLabel)}</time> · ${post.minutes} min read</p>
+        ${post.tags?.length ? `<ul class="tag-list">${post.tags.map((tag) => `<li>${escapeHtml(tag)}</li>`).join('')}</ul>` : ''}
     </div>
 </section>
 <article class="post-body">
@@ -608,6 +659,7 @@ export function build({ includeDrafts = false, outDir = 'dist' } = {}) {
       description: post.description || config.description,
       fromDir: `blog/${post.slug}`,
       active: 'blog',
+      canonical: post.canonicalUrl,
       main: postMain(config, post),
     }));
   }

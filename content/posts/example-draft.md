@@ -2,8 +2,12 @@
 title: "Example draft — layout only"
 date: 2026-09-26
 category: videos
-draft: true
+tags:
+  - example
+  - layout
 description: "Sample post for reviewing layout. Excluded from production. Not about Lee Corning."
+canonical_url:
+draft: true
 ---
 
 > **Draft / example.** This file exists so the post layout can be reviewed. `npm run build` skips every post with `draft: true`. The sentences below are filler. They are not facts about Lee Corning.

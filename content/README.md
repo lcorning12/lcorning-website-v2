@@ -10,19 +10,35 @@ Use lowercase letters, numbers, and hyphens only. `README.md` in this folder is 
 
 ## 2. Add front matter
 
+Posts stay plain Markdown. A future cross-posting tool should write this same file, not HTML. The body below the front matter is the post.
+
 ```markdown
 ---
 title: "Post title"
 date: 2026-09-26
 category: writing
-draft: false
+tags:
+  - notes
+  - tools
 description: "One sentence summary for the list page."
+canonical_url: "https://example.com/original-post"
+draft: false
 ---
 
 Write the post here.
 ```
 
-`date` is `YYYY-MM-DD`. `category` must be one of:
+| Field | Required | Notes |
+| --- | --- | --- |
+| `title` | yes | Plain text. |
+| `date` | yes | `YYYY-MM-DD`. |
+| `category` | yes | One id from the table below. |
+| `tags` | no | A YAML list, `[one, two]`, or a comma-separated line. Shown on the post. Omit it for no tags. |
+| `description` | no | One sentence for the list page and the meta description. |
+| `canonical_url` | no | Original URL when this file is a cross-post. When it is an `http` or `https` URL, the page gets `<link rel="canonical">`. Leave it out, or leave it empty, and no canonical tag is added. |
+| `draft` | no | `true` keeps the file in the repo and out of `npm run build`. Defaults to published. |
+
+`category` must be one of:
 
 | Category id | Section |
 | --- | --- |
