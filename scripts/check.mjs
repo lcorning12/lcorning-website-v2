@@ -15,13 +15,13 @@ const expectedLinks = {
   instagram: '',
   youtube: '',
   github: 'https://github.com/lcorning12',
-  substack: '',
+  substack: 'https://lcorning.substack.com',
 };
 for (const [id, url] of Object.entries(expectedLinks)) {
   const entry = config.links.find((link) => link.id === id);
   expect(entry && entry.url === url, `links.${id} should be ${url || 'empty'}`);
 }
-expect(config.substackUrl.trim() === '', 'substackUrl should be empty');
+expect(config.substackUrl === 'https://lcorning.substack.com', 'substackUrl should be the live publication');
 expect(config.nextlayer.url.trim() === '', 'nextlayer.url should be empty');
 expect(
   fs.readFileSync('content/posts/example-draft.md', 'utf8').includes('draft: true'),
@@ -106,14 +106,17 @@ expect(distHtml.includes('https://x.com/LeeCorning'), 'production pages should l
 expect(distHtml.includes('https://www.facebook.com/lcorning'), 'production pages should link to Facebook');
 expect(distHtml.includes('https://www.linkedin.com/in/leecorning/'), 'production pages should link to LinkedIn');
 expect(distHtml.includes('https://github.com/lcorning12'), 'production pages should link to GitHub');
-for (const label of ['Instagram', 'YouTube', 'Substack']) {
+for (const label of ['Instagram', 'YouTube']) {
   expect(!distHtml.includes(`aria-label="${label}"`) && !distHtml.includes(`>${label}<`), `${label} should stay hidden`);
 }
+expect(distHtml.includes('aria-label="Substack"'), 'Substack profile icon should render');
+expect(distHtml.includes('https://lcorning.substack.com/embed'), 'Substack embed should be on');
+expect(distHtml.includes('Open the Substack'), 'Substack subscribe link should be on');
 expect(distHtml.includes('Experimental Art') && distHtml.includes('Next Layer'), 'category sections missing');
 expect(distHtml.includes('No published posts yet.'), 'empty state missing');
-expect(distHtml.includes('A Substack is coming soon.'), 'Substack coming-soon note missing');
-expect(!distHtml.includes('substack.com'), 'Substack embed should stay hidden');
-expect(!distHtml.includes('<iframe'), 'production pages should not include iframes');
+expect(!distHtml.includes('A Substack is coming soon.'), 'coming-soon note should be replaced by the subscribe block');
+const iframeSrcs = [...distHtml.matchAll(/<iframe[^>]*src="([^"]+)"/g)].map((match) => match[1]);
+expect(iframeSrcs.length > 0 && iframeSrcs.every((src) => src === 'https://lcorning.substack.com/embed'), 'the only iframe should be the Substack embed');
 expect(distHtml.includes('name="viewport"'), 'viewport meta missing');
 expect(!distHtml.includes('Example draft'), 'draft title leaked into production');
 expect(!distHtml.includes('layout sample only'), 'draft banner leaked into production');
@@ -143,6 +146,7 @@ const allowed = [
   'https://www.facebook.com/lcorning',
   'https://www.linkedin.com/in/leecorning/',
   'https://github.com/lcorning12',
+  'https://lcorning.substack.com',
   'http://www.w3.org/2000/svg',
 ];
 const urls = [...distHtml.matchAll(/https?:\/\/[^"'\\\s<)]+/g)].map((match) => match[0].replace(/&amp;/g, '&'));

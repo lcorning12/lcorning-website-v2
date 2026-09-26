@@ -27,7 +27,7 @@ All of this is in `site.config.json`. Empty URLs are omitted from the HTML.
 
 | Key | Current value | What to set |
 | --- | --- | --- |
-| `substackUrl` | empty | Substack publication URL. Until then, the subscribe link and embed stay hidden. The writing section says a Substack is coming soon. |
+| `substackUrl` | `https://lcorning.substack.com` | Set. The writing section links here and embeds `https://lcorning.substack.com/embed`. |
 | `nextlayer.url` | empty | NextLayerUS site URL. None was in the repo. The Next Layer section does not link anywhere yet. |
 | `links` → X | `https://x.com/LeeCorning` | Set |
 | `links` → Facebook | `https://www.facebook.com/lcorning` | Set |
@@ -35,7 +35,7 @@ All of this is in `site.config.json`. Empty URLs are omitted from the HTML.
 | `links` → GitHub | `https://github.com/lcorning12` | Set |
 | `links` → Instagram | empty | Profile URL. Hidden until set. |
 | `links` → YouTube | empty | Profile URL. Hidden until set. |
-| `links` → Substack | empty | Profile URL, if it should also appear with the other icons. Hidden until set. |
+| `links` → Substack | `https://lcorning.substack.com` | Set |
 
 Do not guess the empty URLs. Do not add testimonials, prices, guarantees, statistics, or contact details that are not already known.
 

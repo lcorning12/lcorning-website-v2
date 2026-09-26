@@ -582,6 +582,22 @@ main {
     }
 }
 
+@media (min-width: 768px) and (max-width: 1099px) {
+    .nav-panel {
+        gap: 0.15rem 0.45rem;
+    }
+
+    .nav-panel a {
+        font-size: 0.72rem;
+        letter-spacing: 0.02em;
+    }
+
+    .nav-icons .icon-link {
+        width: 36px;
+        height: 36px;
+    }
+}
+
 .hero,
 .page-hero {
     position: relative;
