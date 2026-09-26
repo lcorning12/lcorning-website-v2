@@ -1,0 +1,48 @@
+{
+  "_todo": [
+    "Set substackUrl to the real Substack publication URL when it exists. An empty value hides the subscribe link and embed.",
+    "Set nextlayer.url when the NextLayerUS site URL is known. Nothing in this repo had that URL, so it stays blank.",
+    "Fill links[].url for Facebook, LinkedIn, Instagram, YouTube, GitHub, and Substack. Empty URLs are not rendered. Do not guess profile URLs."
+  ],
+  "siteName": "Lee Corning",
+  "description": "Experimental art, videos, and writing from Lee Corning.",
+  "location": "Orlando, FL",
+  "substackUrl": "",
+  "nextlayer": {
+    "name": "Next Layer",
+    "company": "NextLayerUS",
+    "summary": "What Lee is building at NextLayerUS, an AI custom-software shop for small and midsize businesses.",
+    "url": ""
+  },
+  "links": [
+    { "id": "x", "label": "X", "url": "https://x.com/LeeCorning" },
+    { "id": "facebook", "label": "Facebook", "url": "" },
+    { "id": "linkedin", "label": "LinkedIn", "url": "" },
+    { "id": "instagram", "label": "Instagram", "url": "" },
+    { "id": "youtube", "label": "YouTube", "url": "" },
+    { "id": "github", "label": "GitHub", "url": "" },
+    { "id": "substack", "label": "Substack", "url": "" }
+  ],
+  "categories": [
+    {
+      "id": "experimental-art",
+      "label": "Experimental Art",
+      "description": "Visual experiments and finished pieces."
+    },
+    {
+      "id": "videos",
+      "label": "Videos",
+      "description": "Video posts. A YouTube, Vimeo, or X link on its own line becomes an embed."
+    },
+    {
+      "id": "next-layer",
+      "label": "Next Layer",
+      "description": "What Lee is building at NextLayerUS, an AI custom-software shop for small and midsize businesses."
+    },
+    {
+      "id": "writing",
+      "label": "Writing / Essays",
+      "description": "Essays and notes."
+    }
+  ]
+}

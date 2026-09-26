@@ -1,161 +1,44 @@
-# Lee Corning AI Consulting Website v2.0
+# Lee Corning
 
-## 🚀 Key Improvements Over Current Site
+Personal site for [lcorning.com](https://lcorning.com). It is a static blog and a links page. The published files are generated into `dist/` and can be hosted on GitHub Pages or Netlify.
 
-### **Major Enhancements**
+GitHub Pages for this repo currently deploys from `main` to `https://lcorning12.github.io/lcorning-website-v2`. The workflow builds `dist/` and uploads only that folder. This does not change DNS.
 
-#### **1. Personal Branding & Credibility**
-- **Lee's photo and bio section** - builds trust with personal connection
-- **Real credentials displayed** - Tesla AI, NCAA D1, LinkedIn followers
-- **Social proof integration** - LinkedIn and X/Twitter links
+## Add a post
 
-#### **2. Interactive ROI Calculator**
-- **Live savings calculator** - users input their costs, see projected savings
-- **Animated number counters** - engaging visual feedback
-- **Instant results** - builds interest before consultation request
-- **Based on real client data** - 75% support reduction, 70% data analysis, etc.
+See [content/README.md](content/README.md). Short version: add one Markdown file to `content/posts/`, then run `npm run build`.
 
-#### **3. Enhanced Conversion Optimization**
-- **Multiple CTAs** throughout the page
+`content/posts/example-draft.md` is a layout sample with `draft: true`. The production build does not publish it. `npm run preview` includes drafts so the layout can be reviewed locally. Do not deploy a preview build.
 
-#### **4. Better User Experience**
-- **Smooth scroll navigation**
-- **Mobile-responsive design**
-- **Loading states and animations**
-- **Form validation** with real-time feedback
-- **FAQ accordion** to address objections
+## Commands
 
-#### **5. Professional Content Structure**
-- **Detailed service explanations**
-- **Process walkthrough** (Discover → Document → Design → Deploy)
-- **Industry-specific messaging**
-
-### **Technical Improvements**
-
-#### **Performance & UX**
-- **Lazy loading** for images
-- **Intersection observer** animations
-- **Debounced scroll events**
-- **Error handling** and graceful degradation
-- **Analytics tracking** setup (Google Analytics ready)
-
-#### **SEO & Marketing**
-- **Structured data** ready
-- **Meta tags optimized** for search
-- **Social sharing** optimization
-- **Conversion tracking** events
-- **Lead scoring** capabilities
-
-#### **Security & Trust**
-- **Form validation** (client and server-side ready)
-- **Security badges** placement areas
-- **Privacy policy** link structure
-- **GDPR compliance** ready
-
-### **Content Strategy Changes**
-
-#### **Messaging Improvements**
-- **"AI-Native"** vs generic "AI consulting"
-- **Specific savings numbers** vs vague promises
-- **Industry expertise** demonstration
-- **Risk reversal** (pilot programs)
-
-### **Files Included**
-
-```
-lcorning-website-v2/
-├── index.html          # Main website HTML
-├── style.css           # Custom CSS with animations
-├── script.js          # Interactive functionality
-└── README.md          # This documentation
+```bash
+npm install
+npm test     # production build, draft preview, and checks
+npm run build    # dist/, drafts excluded
+npm run preview  # dist/, drafts included, noindex
 ```
 
-### **Implementation Features**
+Open `dist/index.html` with any static server. Paths are relative, so the same files work at a domain root or under `/lcorning-website-v2/`.
 
-#### **Ready for Production**
-- **CDN assets** (Tailwind, Font Awesome)
-- **Responsive breakpoints** for all devices
-- **Cross-browser compatibility**
-- **Accessibility compliance** (WCAG guidelines)
+## Config Lee still needs to fill in
 
-#### **Integration Ready**
-- **Google Analytics** tracking events
-- **Email service** integration (Mailchimp/ConvertKit)
-- **CRM integration** (HubSpot/Salesforce)
-- **Payment processing** (Stripe) preparation
+All of this is in `site.config.json`. Empty URLs are omitted from the HTML.
 
-#### **A/B Testing Ready**
-- **Multiple CTA variations**
-- **Pricing test structure**
-- **Headline variations** prepared
-- **Form length** testing capability
+| Key | Current value | What to set |
+| --- | --- | --- |
+| `substackUrl` | empty | Substack publication URL. Until then, the subscribe link and embed stay hidden. The writing section says a Substack is coming soon. |
+| `nextlayer.url` | empty | NextLayerUS site URL. None was in the repo. The Next Layer section does not link anywhere yet. |
+| `links` → Facebook | empty | Profile URL |
+| `links` → LinkedIn | empty | Profile URL |
+| `links` → Instagram | empty | Profile URL |
+| `links` → YouTube | empty | Profile URL |
+| `links` → GitHub | empty | Profile URL |
+| `links` → Substack | empty | Profile URL, if it should also appear with the other icons |
+| `links` → X | `https://x.com/LeeCorning` | Already set |
 
-### **Next Steps for Implementation**
+Do not guess the empty URLs. Do not add testimonials, prices, guarantees, statistics, or contact details that are not already known.
 
-1. **Add Lee's professional photo** to hero and about sections
-2. **Connect contact form** to email service/CRM
-3. **Upload to hosting** (Netlify with GitHub integration)
-4. **Set up analytics** (Google Analytics 4)
-5. **Configure A/B testing** (Google Optimize or similar)
-6. **Add SSL certificate** and security headers
-7. **Test mobile responsiveness** across devices
-8. **Speed optimization** (compress images, minify code)
+## Deploy
 
-### **Performance Targets**
-
-- **Page load time**: <3 seconds
-- **Mobile speed**: 90+ PageSpeed score
-- **Conversion rate**: 5-10% (up from current 1-2%)
-- **Bounce rate**: <40%
-
-### **Conversion Optimization**
-
-#### **Primary Goals**
-- **Consultation bookings** (main KPI)
-- **ROI calculator** completions (lead qualification)
-- **Email signups** (nurture sequence)
-
-#### **Secondary Goals**
-- **Case study** downloads
-- **Social media** follows
-- **Referral requests**
-
-### **Content Marketing Integration**
-
-#### **SEO Content Ready**
-- **Blog section** structure prepared
-- **Case study** template ready
-- **Resource center** framework
-- **Industry landing pages** structure
-
-#### **Lead Magnets Ready**
-- **"AI Readiness Assessment"** framework
-- **"Executive's AI Transformation Playbook"** structure
-- **"ROI Calculator"** as standalone tool
-- **Webinar registration** integration ready
-
----
-
-## 📊 Expected Results
-
-Based on conversion optimization best practices:
-
-- **2-3x conversion rate** improvement
-- **Higher qualified leads** (ROI calculator pre-qualifies)
-- **Premium pricing** acceptance (professional positioning)
-- **Reduced sales cycle** (objection handling built-in)
-
-## 🎯 Review Points for Tyler Garrett
-
-1. **Technical implementation** preferences
-2. **Hosting and deployment** strategy
-3. **Form submission** handling (backend integration)
-4. **Analytics and tracking** setup
-5. **A/B testing** platform choice
-6. **Email marketing** integration
-7. **CRM connection** requirements
-8. **Mobile optimization** priorities
-
----
-
-**Ready for staging deployment and user testing!** 🚀
+Pushing to `main` runs `.github/workflows/deploy.yml`, which publishes `dist/` to GitHub Pages. Netlify can use the `netlify.toml` build command and publish directory. Do not commit `dist/`.
